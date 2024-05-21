@@ -17,18 +17,18 @@ namespace CardMatch.UI {
         [SerializeField] private Button _btn;
         
         [SerializeField, ReadOnly] private CardState _state;
-        [SerializeField, ReadOnly] private int _id;
+        [SerializeField, ReadOnly] private int _card;
         
-        public void Initialize(Card card) {
-            _id = card.ID;
-            _imgCardFace.sprite = card.Face;
+        public void Initialize(int card, Sprite face) {
+            _card = card;
+            _imgCardFace.sprite = face;
             _state = CardState.Hidden;
             _animation.UpdateView(_state);
             _btn.onClick.AddListener(Show);
         }
 
-        public int ID() {
-            return _id;
+        public int Card() {
+            return _card;
         }
         
         public void Leak(float leakingDuration) {
@@ -55,7 +55,7 @@ namespace CardMatch.UI {
             _animation.PlayFlipAnimation(true, () => {
                 _animation.UpdateView(_state);
             }, () => {
-                GameManager.Instance().SelectCard(this);
+                GameManager.Instance().SelectCardCell(this);
             });
             _animation.PlayScaleAnimation(true);
             SfxManager.Instance().PlaySfx(SfxID.CARD_FLIP);

@@ -5,12 +5,14 @@ using CardMatch.Core;
 using CardMatch.Data;
 using UnityEngine;
 using UnityEngine.UI;
+using Logger = CardMatch.Utils.Logger;
 
 namespace CardMatch.UI {
     public class Playground : MonoBehaviour {
         [SerializeField] private GridLayoutGroup _gridLayout;
         [SerializeField] private CardCell _cardCellPrefab;
         [SerializeField] private Transform _cardParent;
+        [SerializeField] private Sprite[] _cardFaces;
         
         //   configs
         private const float SPACE_RATIO = 0.2f;
@@ -24,13 +26,18 @@ namespace CardMatch.UI {
             MessageDispatcher<MessageID.CardsLoadedEventHandler>.RemoveListener(OnCardsLoaded);
         }
 
-        private void OnCardsLoaded(Card[] cards, float leakingDuration) {
+        private void OnCardsLoaded(int[] cards, float leakingDuration) {
             GetIdealGridSize(cards.Length, out int row, out int column);
             SetUpGridLayout(row, column);
             
             foreach (var card in cards) {
-                var cardCell = Instantiate(_cardCellPrefab, _cardParent);
-                cardCell.Initialize(card);
+                if (_cardFaces.Length <= card) {
+                    Logger.Log($"Card {card} doesn't exist. Available cards: 0 - {_cardFaces.Length - 1}");
+                    continue;
+                }
+                
+                CardCell cardCell = Instantiate(_cardCellPrefab, _cardParent);
+                cardCell.Initialize(card, _cardFaces[card]);
                 cardCell.Leak(leakingDuration);
             }
         }

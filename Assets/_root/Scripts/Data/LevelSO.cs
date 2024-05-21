@@ -1,35 +1,42 @@
 using System;
+using System.Collections.Generic;
+using CardMatch.Editor;
 using UnityEngine;
+using Logger = CardMatch.Utils.Logger;
 using Random = UnityEngine.Random;
 
 namespace CardMatch.Data {
     [CreateAssetMenu(fileName = "Level", menuName = "CardMatch/Level")]
     public class LevelSO : ScriptableObject {
-        public Sprite[] cardFaces;
+        [SerializeField] private int[] _cards;
         
-        public Card[] GetShuffledCardFaces() {
-            Card[] shuffledCardFaces = new Card[cardFaces.Length * 2];
-            for (int i = 0; i < cardFaces.Length; i++) {
-                Card card = new Card {
-                    ID = i,
-                    Face = cardFaces[i]
-                };
-                shuffledCardFaces[i * 2] = card;
-                shuffledCardFaces[i * 2 + 1] = card;
+        public int[] GetShuffledCards() {
+            if (HasDuplicateCards()) {
+                Logger.Log($"Duplicate cards found in {name}. Please fix it");
+                return null;
             }
             
-            for (int i = shuffledCardFaces.Length - 1; i > 0; i--) {
-                int k = Random.Range(0, shuffledCardFaces.Length);
-                (shuffledCardFaces[k], shuffledCardFaces[i]) = (shuffledCardFaces[i], shuffledCardFaces[k]);
+            int[] shuffledCards = new int[_cards.Length * 2];
+            for (int i = 0; i < _cards.Length; i++) {
+                shuffledCards[i * 2] = _cards[i];
+                shuffledCards[i * 2 + 1] = _cards[i];
+            }
+            
+            for (int i = shuffledCards.Length - 1; i > 0; i--) {
+                int k = Random.Range(0, shuffledCards.Length);
+                (shuffledCards[k], shuffledCards[i]) = (shuffledCards[i], shuffledCards[k]);
             }
 
-            return shuffledCardFaces;
+            return shuffledCards;
         }
-    }
-    
-    [Serializable]
-    public struct Card {
-        public int ID;
-        public Sprite Face;
+
+        private bool HasDuplicateCards() {
+            HashSet<int> cardSet = new HashSet<int>();
+            foreach (var card in _cards) {
+                if (!cardSet.Add(card)) return true;
+            }
+
+            return false;
+        }
     }
 }

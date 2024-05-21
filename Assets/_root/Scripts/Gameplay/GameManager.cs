@@ -13,7 +13,7 @@ namespace CardMatch.Gameplay {
         [SerializeField] private ScoreManager _scoreManager;
         [SerializeField] private LevelManager _levelManager;
         
-        [SerializeField, ReadOnly] private CardCell _previousCard;
+        [SerializeField, ReadOnly] private CardCell _previousCardCell;
         
         public GameData _data;
         
@@ -23,8 +23,8 @@ namespace CardMatch.Gameplay {
         }
 
         private void Start() {
-            _levelManager.Initialize(0);
-            _scoreManager.Initialize(_levelManager.GetNumberOfMatches());
+            _levelManager.Initialize(4, out int numberOfMatches);
+            _scoreManager.Initialize(numberOfMatches);
         }
 
         [Button]
@@ -37,25 +37,25 @@ namespace CardMatch.Gameplay {
             _data = FileManager.Load<GameData>(Constants.FilePaths.GAME_DATA_PATH);
         }
 
-        public void SelectCard(CardCell card) {
-            if (_previousCard == null) {
-                _previousCard = card;
+        public void SelectCardCell(CardCell cardCell) {
+            if (_previousCardCell == null) {
+                _previousCardCell = cardCell;
                 return;
             }
 
-            if (_previousCard.ID() == card.ID()) {
-                _previousCard.Match();
-                card.Match();
+            if (_previousCardCell.Card() == cardCell.Card()) {
+                _previousCardCell.Match();
+                cardCell.Match();
                 _scoreManager.Match();
                 SfxManager.Instance().PlaySfx(SfxID.CARD_MATCH);
             } else {
-                _previousCard.Hide();
-                card.Hide();
+                _previousCardCell.Hide();
+                cardCell.Hide();
                 _scoreManager.Mismatch();
                 SfxManager.Instance().PlaySfx(SfxID.CARD_MISMATCH);
             }
 
-            _previousCard = null;
+            _previousCardCell = null;
         }
     }
 
