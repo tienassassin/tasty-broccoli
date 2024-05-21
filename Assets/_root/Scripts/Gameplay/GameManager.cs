@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using CardMatch.Core;
 using CardMatch.Editor;
+using CardMatch.Sound;
 using CardMatch.UI;
 using CardMatch.Utils;
 using UnityEngine;
@@ -46,10 +47,12 @@ namespace CardMatch.Gameplay {
                 _previousCard.Match();
                 card.Match();
                 _scoreManager.Match();
+                SfxManager.Instance().PlaySfx(SfxID.CARD_MATCH);
             } else {
                 _previousCard.Hide();
                 card.Hide();
                 _scoreManager.Mismatch();
+                SfxManager.Instance().PlaySfx(SfxID.CARD_MISMATCH);
             }
 
             _previousCard = null;

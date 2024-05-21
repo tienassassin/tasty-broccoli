@@ -322,7 +322,9 @@ MonoBehaviour:
   _currentScore: 0
   _currentCombo: 0
   _currentComboLife: 0
+  _maxCombo: 0
   _moveCount: 0
+  _matchesLeft: 0
 --- !u!1 &151467188
 GameObject:
   m_ObjectHideFlags: 0
@@ -1256,6 +1258,61 @@ MonoBehaviour:
   _txtCombo: {fileID: 478468437}
   _txtComboLife: {fileID: 1439050166}
   _txtMove: {fileID: 375576114}
+--- !u!1 &1106770400
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1106770402}
+  - component: {fileID: 1106770401}
+  m_Layer: 0
+  m_Name: SfxManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1106770401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1106770400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6acfa6ad9792485b934fc590a38f39da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isPersistent: 0
+  _sfxes:
+  - ID: CARD_FLIP
+    AudioClip: {fileID: 8300000, guid: 014531845064bed42b3edb23f291ea70, type: 3}
+  - ID: CARD_MATCH
+    AudioClip: {fileID: 8300000, guid: 9fbcdc2d5a67da140bd6e6e8a563a431, type: 3}
+  - ID: CARD_MISMATCH
+    AudioClip: {fileID: 8300000, guid: 2efffff0b91e34049849cbe0fd0b03a8, type: 3}
+  - ID: GAME_OVER
+    AudioClip: {fileID: 8300000, guid: 61458632b305c90489f4445ff3447539, type: 3}
+  _sfxPlayerPrefab: {fileID: 7858647241272207688, guid: 9da1ebc888260ee4bab8c9df3ee4cc4e, type: 3}
+--- !u!4 &1106770402
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1106770400}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.42233706, y: 0.49227497, z: 77.4533}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1344376830
 GameObject:
   m_ObjectHideFlags: 0
@@ -1904,3 +1961,4 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 1781006462}
   - {fileID: 757065878}
+  - {fileID: 1106770402}

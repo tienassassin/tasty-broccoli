@@ -5,6 +5,7 @@ using CardMatch.Core;
 using CardMatch.Data;
 using CardMatch.Editor;
 using CardMatch.Gameplay;
+using CardMatch.Sound;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -57,6 +58,7 @@ namespace CardMatch.UI {
                 GameManager.Instance().SelectCard(this);
             });
             _animation.PlayScaleAnimation(true);
+            SfxManager.Instance().PlaySfx(SfxID.CARD_FLIP);
         }
         
         public void Hide() {

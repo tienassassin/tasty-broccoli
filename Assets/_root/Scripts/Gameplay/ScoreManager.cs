@@ -1,6 +1,7 @@
 using System;
 using CardMatch.Core;
 using CardMatch.Editor;
+using CardMatch.Sound;
 using UnityEngine;
 using Logger = CardMatch.Utils.Logger;
 
@@ -53,6 +54,7 @@ namespace CardMatch.Gameplay {
         
         private void OnLevelCompleted() {
             Logger.Log("Level Completed");
+            SfxManager.Instance().PlaySfx(SfxID.GAME_OVER);
         }
     }
 }
