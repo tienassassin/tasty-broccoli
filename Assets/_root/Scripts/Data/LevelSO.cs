@@ -12,8 +12,7 @@ namespace CardMatch.Data {
         
         public int[] GetShuffledCards() {
             if (HasDuplicateCards()) {
-                Logger.Log($"Duplicate cards found in {name}. Please fix it");
-                return null;
+                Logger.Log($"Duplicate cards found in {name}!!!");
             }
             
             int[] shuffledCards = new int[_cards.Length * 2];

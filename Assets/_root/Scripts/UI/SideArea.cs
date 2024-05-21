@@ -1,5 +1,6 @@
 using System;
 using CardMatch.Core;
+using CardMatch.Gameplay;
 using TMPro;
 using UnityEngine;
 
@@ -18,11 +19,11 @@ namespace CardMatch.UI {
             MessageDispatcher<MessageID.ScoreUpdatedEventHandler>.RemoveListener(OnScoreUpdated);
         }
 
-        private void OnScoreUpdated(int score, int combo, int comboLife, int move) {
-            _txtScore.text = score.ToString();
-            _txtCombo.text = combo.ToString();
-            _txtComboLife.text = comboLife.ToString();
-            _txtMove.text = move.ToString();
+        private void OnScoreUpdated(ScoreData scoreData) {
+            _txtMove.text = scoreData.MoveCount.ToString();
+            _txtScore.text = scoreData.CurrentScore.ToString();
+            _txtCombo.text = scoreData.CurrentCombo.ToString();
+            _txtComboLife.text = scoreData.CurrentComboLife.ToString();
         }
     }
 }

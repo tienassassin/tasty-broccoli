@@ -1,5 +1,6 @@
 using System;
 using CardMatch.Data;
+using CardMatch.Gameplay;
 using CardMatch.UI;
 using UnityEngine;
 
@@ -21,8 +22,8 @@ namespace CardMatch.Core {
     }
 
     public static class MessageID {
-        public delegate void ScoreUpdatedEventHandler(int score, int combo, int comboLife, int move);
-
+        public delegate void ScoreUpdatedEventHandler(ScoreData scoreData);
         public delegate void CardsLoadedEventHandler(int[] cards, float leakingDuration);
+        public delegate void SelectLastCardsAutomaticallyEventHandler();
     }
 }

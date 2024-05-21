@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CardMatch.Core;
 using CardMatch.Data;
+using CardMatch.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 using Logger = CardMatch.Utils.Logger;
@@ -29,16 +30,24 @@ namespace CardMatch.UI {
         private void OnCardsLoaded(int[] cards, float leakingDuration) {
             GetIdealGridSize(cards.Length, out int row, out int column);
             SetUpGridLayout(row, column);
-            
-            foreach (var card in cards) {
-                if (_cardFaces.Length <= card) {
-                    Logger.Log($"Card {card} doesn't exist. Available cards: 0 - {_cardFaces.Length - 1}");
+
+            for (var i = 0; i < cards.Length; i++) {
+                int card = cards[i];
+                if (card < -1 * _cardFaces.Length || _cardFaces.Length < card) {
+                    Logger.Log($"Card {card} doesn't exist. Available cards: 1 -> {_cardFaces.Length} " +
+                               $"and {-1 * _cardFaces.Length} -> -1 for matched cards");
                     continue;
                 }
-                
+
                 CardCell cardCell = Instantiate(_cardCellPrefab, _cardParent);
-                cardCell.Initialize(card, _cardFaces[card]);
-                cardCell.Leak(leakingDuration);
+
+                if (card > 0) {
+                    cardCell.Initialize(i, card, _cardFaces[card - 1]);
+                    cardCell.Leak(leakingDuration);
+                } else {
+                    cardCell.Initialize(i, card, _cardFaces[-1 * card - 1]);
+                    cardCell.Match(true);
+                }
             }
         }
         

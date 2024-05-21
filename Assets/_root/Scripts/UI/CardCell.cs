@@ -17,14 +17,28 @@ namespace CardMatch.UI {
         [SerializeField] private Button _btn;
         
         [SerializeField, ReadOnly] private CardState _state;
+        [SerializeField, ReadOnly] private int _index;
         [SerializeField, ReadOnly] private int _card;
-        
-        public void Initialize(int card, Sprite face) {
+
+        private void Awake() {
+            MessageDispatcher<MessageID.SelectLastCardsAutomaticallyEventHandler>.AddListener(Show);
+        }
+
+        private void OnDestroy() {
+            MessageDispatcher<MessageID.SelectLastCardsAutomaticallyEventHandler>.RemoveListener(Show);
+        }
+
+        public void Initialize(int index, int card, Sprite face) {
+            _index = index;
             _card = card;
             _imgCardFace.sprite = face;
             _state = CardState.Hidden;
             _animation.UpdateView(_state);
             _btn.onClick.AddListener(Show);
+        }
+
+        public int Index() {
+            return _index;
         }
 
         public int Card() {
@@ -69,12 +83,17 @@ namespace CardMatch.UI {
             _animation.PlayScaleAnimation(false);
         }
         
-        public void Match() {
+        public void Match(bool ignoreAnimation = false) {
             _state = CardState.Matched;
-            _animation.PlayScaleAnimation(false, () => {
+
+            if (ignoreAnimation) {
                 _animation.UpdateView(_state);
-            });
-            _animation.PlayScaleAnimation(false);
+            } else {
+                _animation.PlayScaleAnimation(false, () => {
+                    _animation.UpdateView(_state);
+                });
+                _animation.PlayScaleAnimation(false);   
+            }
         }
     }
     
