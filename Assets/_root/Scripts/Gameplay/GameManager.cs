@@ -11,6 +11,7 @@ namespace CardMatch.Gameplay {
     public class GameManager : Singleton<GameManager> {
         [SerializeField] private ScoreManager _scoreManager;
         [SerializeField] private LevelManager _levelManager;
+        
         [SerializeField, ReadOnly] private CardCell _previousCard;
         
         public GameData _data;
@@ -20,12 +21,17 @@ namespace CardMatch.Gameplay {
             
         }
 
-        [ContextMenu("save")]
+        private void Start() {
+            _levelManager.Initialize(0);
+            _scoreManager.Initialize(_levelManager.GetNumberOfMatches());
+        }
+
+        [Button]
         public void Save() {
             FileManager.Save(_data, Constants.FilePaths.GAME_DATA_PATH);
         }
 
-        [ContextMenu("load")]
+        [Button]
         public void Load() {
             _data = FileManager.Load<GameData>(Constants.FilePaths.GAME_DATA_PATH);
         }
@@ -37,12 +43,12 @@ namespace CardMatch.Gameplay {
             }
 
             if (_previousCard.ID() == card.ID()) {
-                _previousCard.OnMatched();
-                card.OnMatched();
+                _previousCard.Match();
+                card.Match();
                 _scoreManager.Match();
             } else {
-                _previousCard.HideCard();
-                card.HideCard();
+                _previousCard.Hide();
+                card.Hide();
                 _scoreManager.Mismatch();
             }
 

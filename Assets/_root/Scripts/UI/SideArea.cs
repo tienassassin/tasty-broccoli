@@ -11,11 +11,11 @@ namespace CardMatch.UI {
         [SerializeField] private TMP_Text _txtMove;
 
         private void Awake() {
-            MessageDispatcher<MessageID.OnScoreUpdated>.AddListener(OnScoreUpdated);
+            MessageDispatcher<MessageID.ScoreUpdatedEventHandler>.AddListener(OnScoreUpdated);
         }
 
         private void OnDestroy() {
-            MessageDispatcher<MessageID.OnScoreUpdated>.RemoveListener(OnScoreUpdated);
+            MessageDispatcher<MessageID.ScoreUpdatedEventHandler>.RemoveListener(OnScoreUpdated);
         }
 
         private void OnScoreUpdated(int score, int combo, int comboLife, int move) {

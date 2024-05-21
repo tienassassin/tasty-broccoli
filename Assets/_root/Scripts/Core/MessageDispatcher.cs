@@ -21,8 +21,8 @@ namespace CardMatch.Core {
     }
 
     public static class MessageID {
-        public delegate void OnScoreUpdated(int score, int combo, int comboLife, int move);
+        public delegate void ScoreUpdatedEventHandler(int score, int combo, int comboLife, int move);
 
-        public delegate void OnCardsLoaded(Card[] cards);
+        public delegate void CardsLoadedEventHandler(Card[] cards, float leakingDuration);
     }
 }

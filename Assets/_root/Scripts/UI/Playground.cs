@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using CardMatch.Core;
 using CardMatch.Data;
 using UnityEngine;
@@ -9,26 +11,27 @@ namespace CardMatch.UI {
         [SerializeField] private GridLayoutGroup _gridLayout;
         [SerializeField] private CardCell _cardCellPrefab;
         [SerializeField] private Transform _cardParent;
-
+        
         //   configs
         private const float SPACE_RATIO = 0.2f;
         private const float MAX_CELL_SIZE = 200;
 
         private void Awake() {
-            MessageDispatcher<MessageID.OnCardsLoaded>.AddListener(OnCardsLoaded);
+            MessageDispatcher<MessageID.CardsLoadedEventHandler>.AddListener(OnCardsLoaded);
         }
 
         private void OnDestroy() {
-            MessageDispatcher<MessageID.OnCardsLoaded>.RemoveListener(OnCardsLoaded);
+            MessageDispatcher<MessageID.CardsLoadedEventHandler>.RemoveListener(OnCardsLoaded);
         }
 
-        private void OnCardsLoaded(Card[] cards) {
+        private void OnCardsLoaded(Card[] cards, float leakingDuration) {
             GetIdealGridSize(cards.Length, out int row, out int column);
             SetUpGridLayout(row, column);
             
             foreach (var card in cards) {
                 var cardCell = Instantiate(_cardCellPrefab, _cardParent);
                 cardCell.Initialize(card);
+                cardCell.Leak(leakingDuration);
             }
         }
         
