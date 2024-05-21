@@ -8,7 +8,7 @@ using Logger = CardMatch.Utils.Logger;
 namespace CardMatch.Gameplay {
     public class LevelManager : MonoBehaviour {
         [SerializeField] private LevelSO[] _levels;
-        [SerializeField, ReadOnly] private Sprite[] _cardFaces;
+        [SerializeField, ReadOnly] private Card[] _cards;
 
         private void Start() {
             GetCardFaces();
@@ -16,11 +16,11 @@ namespace CardMatch.Gameplay {
         }
 
         private void GetCardFaces() {
-            _cardFaces = _levels[0].GetShuffledCardFaces();
+            _cards = _levels[0].GetShuffledCardFaces();
         }
 
         private void LoadCards() {
-            MessageDispatcher<MessageID.OnCardsLoaded>.Handle()?.Invoke(_cardFaces);
+            MessageDispatcher<MessageID.OnCardsLoaded>.Handle()?.Invoke(_cards);
         }
     }
 }

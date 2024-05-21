@@ -1,12 +1,13 @@
 using System;
 using CardMatch.Core;
+using CardMatch.Data;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace CardMatch.UI {
     public class Playground : MonoBehaviour {
         [SerializeField] private GridLayoutGroup _gridLayout;
-        [SerializeField] private Card _cardPrefab;
+        [SerializeField] private CardCell _cardCellPrefab;
         [SerializeField] private Transform _cardParent;
 
         //   configs
@@ -15,33 +16,29 @@ namespace CardMatch.UI {
 
         private void Awake() {
             MessageDispatcher<MessageID.OnCardsLoaded>.AddListener(OnCardsLoaded);
-
-            foreach (Transform child in _cardParent) {
-                Destroy(child.gameObject);
-            }
         }
 
         private void OnDestroy() {
             MessageDispatcher<MessageID.OnCardsLoaded>.RemoveListener(OnCardsLoaded);
         }
 
-        private void OnCardsLoaded(Sprite[] cardFaces) {
-            GetIdealGridSize(cardFaces.Length, out int row, out int column);
+        private void OnCardsLoaded(Card[] cards) {
+            GetIdealGridSize(cards.Length, out int row, out int column);
             SetUpGridLayout(row, column);
             
-            foreach (var face in cardFaces) {
-                var card = Instantiate(_cardPrefab, _cardParent);
-                card.Initialize(face);
+            foreach (var card in cards) {
+                var cardCell = Instantiate(_cardCellPrefab, _cardParent);
+                cardCell.Initialize(card);
             }
         }
         
-        private void GetIdealGridSize(int totalCard, out int row, out int column) {
-            row = (int)(Mathf.Sqrt(totalCard) + Mathf.Epsilon);
-            while (totalCard % row != 0) {
+        private void GetIdealGridSize(int count, out int row, out int column) {
+            row = (int)(Mathf.Sqrt(count) + Mathf.Epsilon);
+            while (count % row != 0) {
                 row--;
             }
 
-            column = totalCard / row;
+            column = count / row;
         }
 
         private void SetUpGridLayout(int row, int column) {

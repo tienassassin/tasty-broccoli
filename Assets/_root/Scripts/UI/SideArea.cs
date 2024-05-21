@@ -8,6 +8,7 @@ namespace CardMatch.UI {
         [SerializeField] private TMP_Text _txtScore;
         [SerializeField] private TMP_Text _txtCombo;
         [SerializeField] private TMP_Text _txtComboLife;
+        [SerializeField] private TMP_Text _txtMove;
 
         private void Awake() {
             MessageDispatcher<MessageID.OnScoreUpdated>.AddListener(OnScoreUpdated);
@@ -17,10 +18,11 @@ namespace CardMatch.UI {
             MessageDispatcher<MessageID.OnScoreUpdated>.RemoveListener(OnScoreUpdated);
         }
 
-        private void OnScoreUpdated(int score, int combo, int comboLife) {
+        private void OnScoreUpdated(int score, int combo, int comboLife, int move) {
             _txtScore.text = score.ToString();
             _txtCombo.text = combo.ToString();
             _txtComboLife.text = comboLife.ToString();
+            _txtMove.text = move.ToString();
         }
     }
 }

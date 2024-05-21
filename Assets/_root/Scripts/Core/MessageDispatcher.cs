@@ -1,4 +1,6 @@
 using System;
+using CardMatch.Data;
+using CardMatch.UI;
 using UnityEngine;
 
 namespace CardMatch.Core {
@@ -19,8 +21,8 @@ namespace CardMatch.Core {
     }
 
     public static class MessageID {
-        public delegate void OnScoreUpdated(int score, int combo, int comboLife);
+        public delegate void OnScoreUpdated(int score, int combo, int comboLife, int move);
 
-        public delegate void OnCardsLoaded(Sprite[] cardFaces);
+        public delegate void OnCardsLoaded(Card[] cards);
     }
 }

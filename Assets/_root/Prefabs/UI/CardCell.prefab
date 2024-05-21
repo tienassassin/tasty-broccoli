@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5847260458374441553}
   - component: {fileID: 5745659010457293483}
   m_Layer: 5
-  m_Name: Card
+  m_Name: CardCell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -135,11 +135,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _imgFace: {fileID: 1801716700924564562}
+  _viewParent: {fileID: 4142931680859212085}
   _stateViews:
   - {fileID: 5960083356140501435}
   - {fileID: 2289792690529200904}
   _btn: {fileID: 5847260458374441553}
+  _scaleCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2.798919
+      outSlope: 2.798919
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.11589937
+    - serializedVersion: 3
+      time: 0.4351016
+      value: 1.0015696
+      inSlope: 1.5864216
+      outSlope: 1.5864216
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.16620515
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: -1.9715594
+      outSlope: -1.9715594
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.11799939
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   _state: 0
+  _id: 0
+  _isFlipping: 0
 --- !u!1 &2289792690529200904
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,13 +201,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2289792690529200904}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4142931680859212085}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -300,7 +336,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4142931680859212085}
   m_Layer: 5
-  m_Name: Faces
+  m_Name: Views
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

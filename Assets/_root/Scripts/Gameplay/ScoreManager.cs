@@ -9,6 +9,7 @@ namespace CardMatch.Gameplay {
         [SerializeField, ReadOnly] private int _currentScore;
         [SerializeField, ReadOnly] private int _currentCombo;
         [SerializeField, ReadOnly] private int _currentComboLife;
+        [SerializeField, ReadOnly] private int _moveCount;
         
         //   configs
         private const int COMBO_LIFE_LIMIT = 3;
@@ -22,6 +23,7 @@ namespace CardMatch.Gameplay {
             _currentCombo++;
             _currentScore += _currentCombo;
             _currentComboLife = COMBO_LIFE_LIMIT;
+            _moveCount++;
             
             UpdateScore();
         }
@@ -32,12 +34,13 @@ namespace CardMatch.Gameplay {
             if (_currentComboLife == 0) {
                 _currentCombo = 0;
             }
+            _moveCount++;
             
             UpdateScore();
         }
 
         public void UpdateScore() {
-            MessageDispatcher<MessageID.OnScoreUpdated>.Handle()?.Invoke(_currentScore, _currentCombo, _currentComboLife);
+            MessageDispatcher<MessageID.OnScoreUpdated>.Handle()?.Invoke(_currentScore, _currentCombo, _currentComboLife, _moveCount);
         }
     }
 }
