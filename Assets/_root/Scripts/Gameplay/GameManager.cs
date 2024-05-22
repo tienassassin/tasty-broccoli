@@ -16,10 +16,8 @@ namespace CardMatch.Gameplay {
         [SerializeField] private DataManager _dataManager;
 
         [SerializeField, ReadOnly] private CardCell _previousCardCell;
-        
-        protected override void OnAwake() {
-            
-        }
+
+        protected override void OnAwake() { }
 
         private void Start() {
             _dataManager.Initialize(out GameData gameData);

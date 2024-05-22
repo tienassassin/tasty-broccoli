@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using CardMatch.Core;
 using CardMatch.Data;
 using CardMatch.Editor;
@@ -26,7 +27,7 @@ namespace CardMatch.Gameplay {
                 _cards = gameData.Cards;
             }
 
-            numberOfMatches = _cards.Length / 2;
+            numberOfMatches = _cards.Count(x => x > 0) / 2;
             MessageDispatcher<MessageID.CardsLoadedEventHandler>.Handle()?.Invoke(_cards, LEAKING_DURATION);
         }
 
