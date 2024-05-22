@@ -12,7 +12,7 @@ namespace CardMatch.Gameplay {
         private ScoreData _scoreData;
         
         //   configs
-        private const int COMBO_LIFE_LIMIT = 3;
+        private const int COMBO_LIFE_LIMIT = 5;
 
         public void Initialize(GameData gameData, int numberOfMatches) {
             if (gameData == null) {
@@ -54,7 +54,7 @@ namespace CardMatch.Gameplay {
         }
 
         private void UpdateScore() {
-            MessageDispatcher<MessageID.ScoreUpdatedEventHandler>.Handle()?.Invoke(_scoreData);
+            MessageDispatcher<MessageID.ScoreUpdatedEventHandler>.Handle()?.Invoke(_scoreData, COMBO_LIFE_LIMIT);
         }
     }
 
