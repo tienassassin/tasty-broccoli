@@ -22,6 +22,7 @@ namespace CardMatch.Core {
     }
 
     public static class MessageID {
+        public delegate void LevelUpdatedEventHandler(int level);
         public delegate void ScoreUpdatedEventHandler(ScoreData scoreData);
         public delegate void CardsLoadedEventHandler(int[] cards, float leakingDuration);
         public delegate void SelectLastCardsAutomaticallyEventHandler();

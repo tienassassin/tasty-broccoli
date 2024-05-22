@@ -14,10 +14,12 @@ namespace CardMatch.UI {
         [SerializeField] private CardCell _cardCellPrefab;
         [SerializeField] private Transform _cardParent;
         [SerializeField] private Sprite[] _cardFaces;
+
+        private List<CardCell> _cardCells = new();
         
         //   configs
         private const float SPACE_RATIO = 0.2f;
-        private const float MAX_CELL_SIZE = 200;
+        private const float MAX_CELL_SIZE = 250;
 
         private void Awake() {
             MessageDispatcher<MessageID.CardsLoadedEventHandler>.AddListener(OnCardsLoaded);
@@ -30,17 +32,28 @@ namespace CardMatch.UI {
         private void OnCardsLoaded(int[] cards, float leakingDuration) {
             GetIdealGridSize(cards.Length, out int row, out int column);
             SetUpGridLayout(row, column);
+            
+            while (_cardCells.Count < cards.Length) {
+                CardCell cardCell = Instantiate(_cardCellPrefab, _cardParent);
+                _cardCells.Add(cardCell);
+            }
 
-            for (var i = 0; i < cards.Length; i++) {
+            for (int i = 0; i < _cardCells.Count; i++) {
+                CardCell cardCell = _cardCells[i];
+                if (cards.Length <= i) {
+                    cardCell.gameObject.SetActive(false);
+                    continue;
+                }
+                
+                cardCell.gameObject.SetActive(true);
                 int card = cards[i];
+                
                 if (card < -1 * _cardFaces.Length || _cardFaces.Length < card) {
                     Logger.Log($"Card {card} doesn't exist. Available cards: 1 -> {_cardFaces.Length} " +
                                $"and {-1 * _cardFaces.Length} -> -1 for matched cards");
                     continue;
                 }
-
-                CardCell cardCell = Instantiate(_cardCellPrefab, _cardParent);
-
+                
                 if (card > 0) {
                     cardCell.Initialize(i, card, _cardFaces[card - 1]);
                     cardCell.Leak(leakingDuration);

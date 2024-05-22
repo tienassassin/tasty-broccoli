@@ -17,6 +17,12 @@ namespace CardMatch.UI {
         private const float FLIP_DURATION = 0.25f;
         private const float SCALE_DURATION = 0.1f;
 
+        public void ResetAll() {
+            StopAllCoroutines();
+            _viewParent.transform.rotation = Quaternion.Euler(Vector3.zero);
+            transform.localScale = Vector3.one;
+        }
+
         public bool IsAnimating() {
             return _isFlipping;
         }

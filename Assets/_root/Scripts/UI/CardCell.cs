@@ -8,6 +8,7 @@ using CardMatch.Gameplay;
 using CardMatch.Sound;
 using UnityEngine;
 using UnityEngine.UI;
+using Logger = CardMatch.Utils.Logger;
 
 
 namespace CardMatch.UI {
@@ -33,6 +34,7 @@ namespace CardMatch.UI {
             _card = card;
             _imgCardFace.sprite = face;
             _state = CardState.Hidden;
+            _animation.ResetAll();
             _animation.UpdateView(_state);
             _btn.onClick.AddListener(Show);
         }

@@ -7,8 +7,9 @@ using Logger = CardMatch.Utils.Logger;
 
 namespace CardMatch.Gameplay {
     public class ScoreManager : MonoBehaviour {
-        [SerializeField, ReadOnly] private ScoreData _scoreData;
         [SerializeField, ReadOnly] private int _matchesLeft;
+        
+        private ScoreData _scoreData;
         
         //   configs
         private const int COMBO_LIFE_LIMIT = 3;

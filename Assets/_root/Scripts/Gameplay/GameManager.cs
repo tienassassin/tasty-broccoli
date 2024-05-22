@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using CardMatch.Core;
@@ -16,6 +17,9 @@ namespace CardMatch.Gameplay {
         [SerializeField] private DataManager _dataManager;
 
         [SerializeField, ReadOnly] private CardCell _previousCardCell;
+        
+        //   configs
+        private const float GAME_OVER_DELAY = 2f;
 
         protected override void OnAwake() { }
 
@@ -64,6 +68,13 @@ namespace CardMatch.Gameplay {
         public void OnLevelCompleted() {
             Logger.Log("Level Completed");
             SfxManager.Instance().PlaySfx(SfxID.GAME_OVER);
+            StartCoroutine(DoMoveToNextLevel());
+        }
+
+        IEnumerator DoMoveToNextLevel() {
+            yield return Common.GetWait(GAME_OVER_DELAY);
+            _levelManager.LevelUp(out int numberOfMatches);
+            _scoreManager.Initialize(null, numberOfMatches);
         }
     }
 
